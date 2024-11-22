@@ -41,6 +41,7 @@ def obtener_estudiantes():
 @app.route('/estudiantes', methods=['POST'])
 def agregar_estudiante():
     data = request.get_json()
+    
     nuevo_estudiante = Estudiante(
         no_control=data['no_control'],
         nombre=data['nombre'],
