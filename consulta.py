@@ -2,7 +2,7 @@ import requests
 
 # URL de la API
 url = "https://api-test-2-vnx1.onrender.com/" 
-
+#prueba 
 # Función para realizar la solicitud GET
 def get_estudiantes():
     response = requests.get(url)
