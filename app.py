@@ -92,5 +92,32 @@ def eliminar_estudiante(no_control):
     db.session.commit()
     return jsonify({'mensaje': 'Estudiante eliminado exitosamente'})
 
+    # Endpoint para actualizar un campo de un estudiante por no_control
+@app.route('/estudiantes/<no_control>', methods=['PATCH'])
+def cambiar_estudiante(no_control):
+    estudiante = Estudiante.query.get(no_control)
+    if estudiante is None:
+        return jsonify({'mensaje': 'Estudiante no encontrado'}), 404
+
+    # Obtener los datos enviados en el cuerpo de la petición
+    datos = request.get_json()
+
+    # Verificar si se envió un campo específico para actualizar
+    if 'nombre' in datos:
+        estudiante.nombre = datos['nombre']
+    elif 'ap_paterno' in datos:
+        estudiante.ap_paterno = datos['ap_paterno']
+    elif 'ap_materno' in datos:
+        estudiante.ap_materno = datos['ap_materno']
+    elif 'semestre' in datos:
+        estudiante.semestre = datos['semestre']
+    else:
+        return jsonify({'mensaje': 'Campo no válido para actualizar'}), 400
+
+    # Guardar los cambios en la base de datos
+    db.session.commit()
+
+    return jsonify({'mensaje': 'Estudiante actualizado correctamente'})
+
 if __name__ == '__main__':
     app.run(debug=True)
